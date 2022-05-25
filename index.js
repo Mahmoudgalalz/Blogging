@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const path = require('path')
 const Post = require('./database/models/Post')
-const User= require('./database/models/User');
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
 const edge = require("edge.js");
@@ -22,6 +21,8 @@ app.use(connectFlash());
 app.use(expressSession({
     secret: 'secret'
 }));
+
+
 const redirectIfAuthenticated = require('./middleware/redirectIfAuthenticated')
 const createUserController = require("./controllers/createUser");
 const storeUserController = require('./controllers/storeUser');
@@ -63,6 +64,7 @@ app.use(bodyParser.urlencoded({
 const storePost = require('./middleware/storePost')
 app.use('/posts/store', storePost)
 
+//main index
 app.get('/', async (req, res) => {
     const posts = await Post.find({})
     res.render('index', {
@@ -103,7 +105,7 @@ app.get('/login',redirectIfAuthenticated, loginController);
 app.post('/users/login',redirectIfAuthenticated, loginUserController);
 
 
-// get the an blog
+// get an blog
 app.get('/:id', async (req, res) => {
     const post = await Post.findById(req.params.id)
     res.render('post', {

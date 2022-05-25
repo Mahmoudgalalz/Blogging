@@ -22,7 +22,7 @@ module.exports = (req, res) => {
                 }
             })
         } else {
-            return res.redirect('/login')
+            return res.redirect('/register')
         }
     })
 }
