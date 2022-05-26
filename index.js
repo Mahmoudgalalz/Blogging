@@ -51,6 +51,8 @@ app.use(fileUpload());
 app.use(express.static('public'));
 app.use(engine);
 app.set('views', __dirname + '/views');
+
+// Global User
 app.use('*', (req, res, next) => {
     edge.global('auth', req.session.userId)
     next()
@@ -61,6 +63,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
+//validation for Posts
 const storePost = require('./middleware/storePost')
 app.use('/posts/store', storePost)
 
@@ -88,7 +92,7 @@ app.post("/posts/store",auth, (req, res) => {
         image
     } = req.files
 
-    image.mv(path.resolve(__dirname, '/public', image.name), (error) => {
+    image.mv(path.resolve(__dirname, './public/posts', image.name), (error) => {
         Post.create({
             ...req.body,
             image: `/posts/${image.name}`
@@ -116,6 +120,6 @@ app.get('/:id', async (req, res) => {
 
 app.get("/logout", redirectIfAuthenticated, logoutController);
 
-app.listen(4000,()=>{
+app.listen(4001,()=>{
     console.log('App is running on port 4000');
 });
