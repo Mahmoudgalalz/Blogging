@@ -10,7 +10,7 @@
 ## linux Users Deployment
 - nodejs
 
-1. use `sudo apt install nodejs` or you can use the Snap Store and search for node
+1. use `sudo apt install npm` or you can use the Snap Store and search for node
   version that I used without any issues 17.8.0v 
 2. check your version `node -v && npm -v`
 
